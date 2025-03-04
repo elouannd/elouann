@@ -103,3 +103,22 @@ button:disabled,
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.language-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-toggle:hover {
+  background: #f5f5f5;
+}
