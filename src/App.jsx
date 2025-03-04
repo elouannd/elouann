@@ -66,7 +66,7 @@ function App() {
   const translations = {
     en: {
       title: 'Elouann Domenech',
-      subtitle: 'Audio Software Developer',
+      subtitle: '',
       projects: 'Projects',
       soundkeeperTitle: 'SoundKeeper',
       soundkeeperDesc: 'A simple backup system for your audio plugins',
@@ -77,7 +77,7 @@ function App() {
     },
     fr: {
       title: 'Elouann Domenech',
-      subtitle: 'Développeur Audio',
+      subtitle: '',
       projects: 'Projets',
       soundkeeperTitle: 'SoundKeeper',
       soundkeeperDesc: 'Un système de sauvegarde simple pour vos plugins audio',
@@ -158,8 +158,7 @@ function App() {
                     className="download-button"
                     onMouseEnter={playHoverSound}
                   >
-                    <span className="button-edge"></span>
-                    <span className="button-face">{t.download}</span>
+                    {t.download}
                   </button>
                   <span className="macos-badge">{t.macosOnly}</span>
                   <a 

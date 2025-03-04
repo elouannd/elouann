@@ -138,22 +138,29 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 20px;
 }
 
-/* Project cards with classic iOS style */
+/* Project cards with improved hover */
 .project-card {
   background: linear-gradient(to bottom, var(--metal-light), var(--metal-mid));
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1.5rem;
   margin-bottom: 1rem;
   box-shadow: 
     var(--inset-light),
     0 1px 3px var(--glass-shadow);
   position: relative;
+  transition: transform 0.2s cubic-bezier(0.215, 0.61, 0.355, 1),
+              box-shadow 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 
+    var(--inset-light),
+    0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 button:disabled,
@@ -421,24 +428,19 @@ header {
 
 .card-content {
   padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
   height: 100%;
 }
 
-.card-header {
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.card-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.glow-text {
-  font-size: 1.8rem;
-  color: #fff;
-  text-shadow: 
-    0 0 5px var(--secondary-neon),
-    0 0 10px var(--secondary-neon);
-  margin: 0;
+.card-title {
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 1rem;
 }
 
 .card-description {
@@ -520,25 +522,47 @@ header {
 }
 
 .download-button {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
+  background: linear-gradient(to bottom, #fff, #f0f0f0);
+  border: 1px solid var(--border);
+  padding: 0.8rem 1.4rem;
   border-radius: 6px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.9rem;
+  color: var(--accent);
+  box-shadow: 
+    var(--inset-light),
+    0 1px 3px var(--glass-shadow);
+  transition: all 0.15s ease-out;
+  position: relative;
+  transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 }
 
 .download-button:hover {
-  background: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 3px 10px rgba(0, 153, 255, 0.3);
+  background: linear-gradient(to bottom, #fff, #e8e8e8);
+  color: var(--accent-dark);
+  transform: translateY(-1px);
+  box-shadow: 
+    var(--inset-light),
+    0 2px 5px var(--glass-shadow);
 }
 
 .download-button:active {
+  background: linear-gradient(to bottom, #e8e8e8, #ddd);
   transform: translateY(0);
+  box-shadow: 
+    var(--inset-shadow),
+    0 1px 2px var(--glass-shadow);
+  transition-duration: 0.05s;
+}
+
+/* Remove any conflicting styles */
+.download-button:focus {
+  outline: none;
+  box-shadow: 
+    var(--inset-light),
+    0 0 0 3px rgba(0, 122, 255, 0.1);
 }
 
 .holographic-button {
@@ -590,24 +614,30 @@ header {
 }
 
 .github-button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
-  background: transparent;
+  padding: 0.8rem 1.4rem;
+  background: var(--metal-light);
   border: 1px solid var(--border);
-  color: var(--text);
-  padding: 0.6rem 1.2rem;
   border-radius: 6px;
+  color: var(--text);
   font-weight: 500;
   text-decoration: none;
-  transition: all 0.2s ease;
-  font-size: 0.9rem;
+  transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .github-button:hover {
-  background: var(--hover);
+  background: var(--metal-mid);
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.github-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .github-icon {
@@ -887,4 +917,24 @@ header {
   box-shadow: 
     var(--inset-light),
     0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Badge style */
+.macos-badge {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  background: var(--metal-mid);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0 0.5rem;
+}
+
+/* Button container */
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1.5rem;
 }
