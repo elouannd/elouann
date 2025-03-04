@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { translations } from './translations';
 import Header from './components/Header';
 import MainSection from './components/MainSection';
@@ -12,47 +12,20 @@ function App() {
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [hoverSound] = useState(new Audio('/hover.mp3'));
   const [clickSound] = useState(new Audio('/click.mp3'));
-  const [hapticSupported, setHapticSupported] = useState(false);
   const [activeSection, setActiveSection] = useState('main');
-  
-  // Check for haptic support on component mount
-  useEffect(() => {
-    setHapticSupported('vibrate' in navigator);
-  }, []);
-  
-  // Play haptic feedback
-  const playHaptic = (type) => {
-    if (!hapticSupported) return;
-    
-    switch (type) {
-      case 'light':
-        navigator.vibrate(10);
-        break;
-      case 'medium':
-        navigator.vibrate(30);
-        break;
-      case 'heavy':
-        navigator.vibrate([40, 30, 40]);
-        break;
-      default:
-        navigator.vibrate(20);
-    }
-  };
   
   // Play sound effects
   const playHoverSound = () => {
     hoverSound.currentTime = 0;
     hoverSound.play().catch(() => {});
-    playHaptic('light');
   };
   
   const playClickSound = () => {
     clickSound.currentTime = 0;
     clickSound.play().catch(() => {});
-    playHaptic('medium');
   };
   
-  // Detect browser language on component mount
+  // Detect browser language on component mount 
   useEffect(() => {
     const browserLang = navigator.language.substring(0, 2).toLowerCase();
     if (browserLang === 'fr') {
@@ -74,7 +47,6 @@ function App() {
   // Function to handle direct downloads from GitHub
   const handleDownload = (projectName, repoName) => {
     playClickSound();
-    playHaptic('heavy');
     
     // Add download animation
     const downloadAnimation = document.createElement('div');
@@ -93,21 +65,10 @@ function App() {
     setLanguage(language === 'en' ? 'fr' : 'en');
   }
 
-  // Special component that uses Force Touch trackpad capabilities
-  const HapticFeedbackArea = ({ children }) => {
-    return (
-      <div className="haptic-area">
-        {children}
-      </div>
-    );
-  };
-
   return (
     <Router>
-      <div className="tech-container">
-        <div className="background-grid"></div>
-        <div className="moving-gradient"></div>
-        
+      <div className="tech-container"></div>
+      <div className="content-wrapper">
         <Header 
           t={t}
           activeSection={activeSection}
@@ -117,7 +78,7 @@ function App() {
           toggleLanguage={toggleLanguage}
           language={language}
         />
-
+        
         <Routes>
           <Route path="/" element={
             <section className="section-container">
@@ -170,7 +131,7 @@ function App() {
         </section>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -32,7 +32,7 @@
 
 /* Base styles */
 body {
-  background: var(--background);
+  background: transparent; /* Remove any background here */
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   line-height: 1.5;
@@ -52,6 +52,10 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  background: transparent; /* Remove any background here */
 }
 
 .logo {
@@ -190,20 +194,7 @@ button:disabled,
 
 /* Background grid effect */
 .background-grid {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    linear-gradient(to right, rgba(0, 229, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 229, 255, 0.1) 1px, transparent 1px);
-  background-size: 40px 40px;
-  transform: perspective(1000px) rotateX(60deg) scale(2) translateY(-200px);
-  transform-origin: center top;
-  animation: grid-move 20s linear infinite;
-  z-index: -2;
-  opacity: 0.5;
+  display: none;
 }
 
 @keyframes grid-move {
@@ -650,9 +641,11 @@ header {
   background: var(--panel-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1.5rem;
   margin-top: 2rem;
   box-shadow: var(--inset-shadow);
+  position: relative;
+  z-index: 2;
 }
 
 .contact-grid {
@@ -797,22 +790,7 @@ header {
 
 /* Moving gradient background */
 .moving-gradient {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    125deg,
-    rgba(0, 60, 120, 0.1) 0%,
-    rgba(0, 30, 60, 0.05) 25%, 
-    rgba(10, 10, 40, 0.05) 50%,
-    rgba(90, 30, 120, 0.1) 75%,
-    rgba(0, 60, 90, 0.1) 100%
-  );
-  background-size: 400% 400%;
-  animation: gradientMove 15s ease infinite;
-  z-index: -3;
+  display: none;
 }
 
 @keyframes gradientMove {
@@ -864,7 +842,7 @@ header {
 
 /* Header panel with gradient and inset */
 .header-panel {
-  background: linear-gradient(to bottom, var(--metal-light), var(--metal-dark));
+  background: var(--panel-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1.5rem;
@@ -873,6 +851,8 @@ header {
     var(--inset-light),
     0 1px 3px var(--glass-shadow);
   position: relative;
+  z-index: 2;
+  backdrop-filter: none;
 }
 
 /* Title with inset text effect */
@@ -1008,4 +988,133 @@ header {
     var(--inset-shadow),
     0 1px 0 white;
   color: var(--accent);
+}
+
+/* Add this new animated gradient background */
+.tech-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(
+    45deg,
+    #b8c6db,
+    #8ba4cd,
+    #9eb3d9,
+    #7a99c7,
+    #89a7d1,
+    #96b1d8,
+    #b8c6db
+  );
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+  z-index: -1;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Soften the overlay to match the pastel theme */
+.tech-container::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Create a content wrapper */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding: 20px;
+  background: none;
+}
+
+/* Update your overlay */
+.tech-container::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure all content sections have proper z-index */
+.header-panel,
+.section-container,
+.contact-section {
+  position: relative;
+  z-index: 2;
+  background: var(--panel-bg);
+  backdrop-filter: none;
+}
+
+/* Add an overlay to make content more readable */
+.tech-container::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content stays above the gradient */
+.header-panel,
+.section-container,
+.contact-section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Add a subtle noise texture overlay */
+.tech-container::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Update section container */
+.section-container {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 
+    var(--inset-light),
+    0 1px 3px var(--glass-shadow);
+  position: relative;
+  z-index: 2;
+  backdrop-filter: none;
 }
